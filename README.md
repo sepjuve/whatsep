@@ -13,7 +13,7 @@ node app.js
 ## Docker
 ```bash
 docker build --tag whatsep .
-docker run -p /<PORT>:<CONTAINER PORT> -e PORT=<CONTAINER PORT> -d --name absen whatsep
+docker run -p <PORT>:<CONTAINER PORT> -e PORT=<CONTAINER PORT> -d --name absen whatsep
 ```
 
 ## License
