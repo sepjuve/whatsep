@@ -1,0 +1,11 @@
+version: '2'
+services:
+  whatsapp1:
+    image: whatsep:latest
+    environment:
+      - PORT:3001
+      - WEBHOOK:YOUR WEBHOOK
+    ports:
+      - "3001:3001"
+    tty: true    
+    restart: always

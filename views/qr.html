@@ -1,0 +1,31 @@
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+<title>QRCode </title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+<script type="text/javascript" src="jquery.min.js"></script>
+<script type="text/javascript" src="qrcode.min.js"></script>
+</head>
+<body>
+<h1>Scan this QR</h1>
+<div id="qrcode" style="width:300px; height:300px; margin-top:15px;"></div>
+<script type="text/javascript">
+var qrcode = new QRCode(document.getElementById("qrcode"), {
+	width : 300,
+	height : 300
+});
+
+setInterval(function(){
+	$.get( "http://localhost:3001/qrplain", function( qr ) {
+		if (qr!='AUTHENTICATED') {
+			qrcode.makeCode(qr);
+		} else {
+			$("#qrcode").html(qr + " !");
+		}
+		 
+		console.log(qr);
+	});
+}, 10000);
+
+</script>
+</body>
