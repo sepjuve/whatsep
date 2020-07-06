@@ -16,7 +16,7 @@ var qrcode = new QRCode(document.getElementById("qrcode"), {
 });
 
 setInterval(function(){
-	$.get( "http://localhost:3001/qrplain", function( qr ) {
+	$.get( "/qrplain", function( qr ) {
 		if (qr!='AUTHENTICATED') {
 			qrcode.makeCode(qr);
 		} else {
