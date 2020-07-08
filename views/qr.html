@@ -14,8 +14,12 @@ var qrcode = new QRCode(document.getElementById("qrcode"), {
 	width : 300,
 	height : 300
 });
-
+getQR();
 setInterval(function(){
+	getQR();
+}, 10000);
+
+function getQR(){
 	$.get( "/qrplain", function( qr ) {
 		if (qr!='AUTHENTICATED') {
 			qrcode.makeCode(qr);
@@ -25,7 +29,6 @@ setInterval(function(){
 		 
 		console.log(qr);
 	});
-}, 10000);
-
+}
 </script>
 </body>
