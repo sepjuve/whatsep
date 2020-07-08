@@ -1,4 +1,5 @@
 # whatsep
+A simple whatsapp API
 
 ## Usage
 
