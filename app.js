@@ -118,7 +118,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static('public'));
 
-app.get('/', (req, res) => res.send('This is whatsapp web REST!'));
+app.get('/', (req, res) => res.sendFile(__dirname + '/views/index.html'));
 
 app.post('/send', (req, res) => {
     var number = req.body.number;

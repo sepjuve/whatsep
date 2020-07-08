@@ -1,44 +1,77 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko">
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
-<title>Cross-Browser QRCode generator for Javascript</title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
-<script type="text/javascript" src="jquery.min.js"></script>
-<script type="text/javascript" src="qrcode.js"></script>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Whatsap API - Home</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+
 </head>
+
 <body>
-<input id="text" type="text" value="http://jindo.dev.naver.com/collie" style="width:80%" /><br />
-<div id="qrcode" style="width:100px; height:100px; margin-top:15px;"></div>
+  <!-- Header -->
+  <header class="bg-primary py-5 mb-5">
+    <div class="container h-100">
+      <div class="row h-100 align-items-center">
+        <div class="col-lg-12">
+          <h1 class="display-4 text-white mt-5 mb-2">Welcome to Whatsep</h1>
+          <p class="lead mb-5 text-white-50">A Simple whatsap API</p>
+        </div>
+      </div>
+    </div>
+  </header>
 
-<script type="text/javascript">
-var qrcode = new QRCode(document.getElementById("qrcode"), {
-	width : 100,
-	height : 100
-});
+  <!-- Page Content -->
+  <div class="container">
 
-function makeCode () {		
-	var elText = document.getElementById("text");
-	
-	if (!elText.value) {
-		alert("Input a text");
-		elText.focus();
-		return;
-	}
-	
-	qrcode.makeCode(elText.value);
-}
+    <div class="row">
+      <div class="col-md-9 mb-5">
+        <h2>Usage</h2>
+        <hr>
+        <ul>
+          <li>Scan QR to get started <a href="/qr">http://localhost:port/qr</a></li>
+          <li>Get Info goto <a href="/info">http://localhost:port/info</a></li>
+          <li>To set webhook goto <a href="/webhook">http://localhost:port/webhook?url=&lt;webhook url&gt;</a></li>
+        </ul>
+      </div>
+      <div class="col-md-3 mb-5">
+        <h2>Contact Us</h2>
+        <hr>
+        <address>
+          <strong>Whatsep</strong>
+          <br>3481 Melrose Place
+          <br>Beverly Hills, CA 90210
+          <br>
+        </address>
+        <address>
+          <abbr title="Phone">P:</abbr>
+          (123) 456-7890
+          <br>
+          <abbr title="Email">E:</abbr>
+          <a href="mailto:#">sepbitcoin@gmail.com</a>
+        </address>
+      </div>
+    </div>
+    <!-- /.row -->
 
-makeCode();
+  </div>
+  <!-- /.container -->
 
-$("#text").
-	on("blur", function () {
-		makeCode();
-	}).
-	on("keydown", function (e) {
-		if (e.keyCode == 13) {
-			makeCode();
-		}
-	});
-</script>
+  <!-- Footer -->
+  <footer class="py-5 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">Copyright &copy; Whatsep 2020</p>
+    </div>
+    <!-- /.container -->
+  </footer>
+
 </body>
+
+</html>

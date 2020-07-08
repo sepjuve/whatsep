@@ -3,8 +3,8 @@
 <title>QRCode </title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
-<script type="text/javascript" src="jquery.min.js"></script>
-<script type="text/javascript" src="qrcode.min.js"></script>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/qrcode.min.js"></script>
 </head>
 <body>
 <h1>Scan this QR</h1>
@@ -26,9 +26,10 @@ function getQR(){
 		} else {
 			$("#qrcode").html(qr + " !");
 		}
-		 
 		console.log(qr);
-	});
+	}).fail(function() {
+    	$("#qrcode").html("Server error !");
+  	});
 }
 </script>
 </body>
