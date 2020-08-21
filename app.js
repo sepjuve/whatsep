@@ -1,25 +1,6 @@
-const fs = require('fs');
-const {Client, ClientInfo} = require('whatsapp-web.js');
+const {client, fs, SESSION_FILE_PATH, WEBHOOK} = require('./client.js');
 const qrcode = require('qrcode-terminal');
-const axios = require('axios');
-const SESSION_FILE_PATH = './session.json';
-const webhook =  process.env.WEBHOOK;
-
-let sessionCfg, QR;
-if (fs.existsSync(SESSION_FILE_PATH)) {
-    sessionCfg = require(SESSION_FILE_PATH);
-}
-
-const client = new Client({
-    puppeteer: {
-        headless: true,
-         args: [
-            '--no-sandbox',
-            '--disable-setuid-sandbox'
-        ],   
-    },
-    session: sessionCfg,
-});
+let QR, BATTERY, PLUGGED;
 
 client.on('qr', (qr) => {
     // Generate and scan this code with your phone
@@ -41,72 +22,14 @@ client.on('authenticated', (session) => {
     });
 });
 
-client.on('auth_failure', msg => {
-    // Fired if session restore was unsuccessfull
-    console.error('AUTHENTICATION FAILURE', msg);
-});
-
-info = "";
-client.on('ready', () => {
-    console.log('Client is ready!');
-    
-});
-
-client.on('message', msg => {
-    console.log('MESSAGE RECEIVED', msg);
-	if(msg.type=='chat'){
-		if (msg.body == '!ping') {
-			msg.reply('pong');
-		}
-		if (webhook!=='' || webhook!==undefined || webhook.length>10){
-			console.log("Webhook",webhook);
-			axios.post(webhook, msg)
-			.then((res) => {
-			  console.log(`statusCode: ${res.statusCode}`);
-			  console.log(res.data);
-			})
-			.catch((error) => {
-			  console.error(error);
-			})
-		}  
-	}
-});
-
-client.on('message_ack', (msg, ack) => {
-    /*
-        == ACK VALUES ==
-        ACK_ERROR: -1
-        ACK_PENDING: 0
-        ACK_SERVER: 1
-        ACK_DEVICE: 2
-        ACK_READ: 3
-        ACK_PLAYED: 4
-    */
-
-    if(ack == 3) {
-        // The message was read
-        console.log('MESSAGE READ', msg);
-    }
-});
-
-client.on('change_state', (reason) => { 
-    console.log(reason);
-});
-
-var battery, plugged;
 client.on('change_battery', (batteryInfo) => {
     // Battery percentage for attached device has changed
-    battery = batteryInfo.battery;
-	plugged = batteryInfo.plugged;
-    console.log(`Battery: ${battery}% - Charging? ${plugged}`);
-});
-
-client.on('disconnected', (reason) => {
-    console.log('Client was logged out', reason);
+    BATTERY = batteryInfo.battery;
+	PLUGGED = batteryInfo.plugged;
+    console.log(`Battery: ${BATTERY}% - Charging? ${PLUGGED}`);
 });
 
 client.initialize();
-
 
 // API
 const express = require('express');
@@ -150,10 +73,10 @@ app.get('/info', (req, res) => {
             "status": result,
 			"alias": info.pushname,
             "mynumber": info.me.user,
-            "hook_url": (webhook!=='' || webhook!==undefined) ? webhook : "",
+            "hook_url": (WEBHOOK!=='' || WEBHOOK!==undefined) ? WEBHOOK : "",
             "platform": info.platform,
-            "battery": battery,
-			"plugged": plugged
+            "battery": BATTERY,
+			"plugged": PLUGGED
 		};
         res.send(log);
 		console.log(log);
@@ -163,7 +86,7 @@ app.get('/info', (req, res) => {
             "status":"disconnected"
         };
         res.send(log);
-        console.log(log);
+        console.log(err);
     });
 });
 
